@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Controller for timer</title>
+
+        <meta charset="utf-8">
+		<meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"></link>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link rel="stylesheet" href="base.css"></link>
+        <script src="/node_modules//socket.io-client/dist/socket.io.js"></script>
+    </head>
+    <body>
+        <div id="small-clock"><span id="minutes">00</span>:<span id="seconds">00</span></div>
+        <div>
+            <button class="big-button" id="playButton" onclick="play()"><i class="fas fa-play"></i></button>
+            <button class="big-button" id="pauseButton" onclick="pause()"><i class="fas fa-pause"></i></button>
+        </div>
+        <div>Current speed: <span id="currentSpeed">1</span>x</div>
+        <div>
+            <button class="small-button" onclick="setSecondsPerSecond(0.6)">0.6x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(0.8)">0.8x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(1.0)">1x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(1.2)">1.2x</button>
+        </div>
+        <div>
+            <button class="small-button" onclick="setSecondsPerSecond(1.4)">1.4x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(1.6)">1.6x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(1.9)">1.9x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(2.2)">2.2x</button>
+        </div>
+        <div>
+            <button class="small-button" onclick="setSecondsPerSecond(2.5)">2.5x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(3.0)">3x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(3.5)">3.5x</button>
+            <button class="small-button" onclick="setSecondsPerSecond(4)">4x</button>
+        </div>
+        Add or remove time
+        <div>
+            <button class="small-button" onclick="addTime(0,1)">+1s</button>
+            <button class="small-button" onclick="addTime(0,10)">+10s</button>
+            <button class="small-button" onclick="addTime(1,0)">+1m</button>
+            <button class="small-button" onclick="addTime(10,0)">+10m</button>
+        </div>
+        <div>
+            <button class="small-button" onclick="addTime(0,-1)">-1s</button>
+            <button class="small-button" onclick="addTime(0,-10)">-10s</button>
+            <button class="small-button" onclick="addTime(-1,0)">-1m</button>
+            <button class="small-button" onclick="addTime(-10,0)">-10m</button>
+        </div>
+        <div>
+            <button class="flat-button" onclick="resetToZero()">Reset to zero</button>
+        </div>
+    </body>
+    <script src="/base.js"></script>
+</html>

@@ -1,0 +1,51 @@
+@font-face{
+    font-family:'digital-clock-font';
+    src: url('fonts/digital-7.ttf');
+}
+
+button {
+    margin: 5px;
+    background-color: black;
+    border: 3px solid yellow;
+    color: yellow;
+}
+
+button:active {
+    background-color: yellow;
+    color: black;
+}
+
+.big-button {
+    width: 179px;
+    height: 179px;
+}
+
+.small-button {
+    width: 82px;
+    height: 82px;
+}
+
+.flat-button {
+    width: 370px;
+    height: 82px;
+}
+
+body {
+    font-family: digital-clock-font;
+    color: yellow;
+    background: black;
+    font-style: italic;
+    text-align: center;
+    margin: 10px;
+
+}
+
+#clock {
+    margin-top: 200px;
+    font-size: 306px;
+}
+
+#small-clock {
+    margin-top: 20px;
+    font-size: 50px;
+}
