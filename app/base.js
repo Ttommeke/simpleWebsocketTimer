@@ -9,6 +9,50 @@ let playButtonElement = document.getElementById('playButton');
 let pauseButtonElement = document.getElementById('pauseButton');
 let currentSpeedElement = document.getElementById('currentSpeed');
 
+//everything for audio
+let context = new (window.AudioContext || window.webkitAudioContext)();
+
+let soundObject = {
+    lowSoundBuffer: undefined,
+    highSoundBuffer: undefined,
+    lowSoundSourceNode: context.createBufferSource(),
+    highSoundSourceNode: context.createBufferSource(),
+    dynamicsCompressorNode: context.createDynamicsCompressor()
+};
+
+let loadLowSound = function() {
+    let request = new XMLHttpRequest();
+    request.open('get', "/sounds/low.ogg", true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = function() {
+        context.decodeAudioData(request.response, function(buffer) {
+            soundObject.lowSoundBuffer = buffer;
+        });
+    };
+    request.send();
+};
+
+let loadHighSound = function() {
+    let request = new XMLHttpRequest();
+    request.open('get', "/sounds/high.ogg", true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = function() {
+        context.decodeAudioData(request.response, function(buffer) {
+            soundObject.highSoundBuffer = buffer;
+        });
+    };
+    request.send();
+};
+
+soundObject.dynamicsCompressorNode.connect(context.destination);
+
+loadLowSound();
+loadHighSound();
+
+//done with audio
+
 let displayTime = function(minutes, seconds) {
     if (minutes < 10) {
         minutesElement.innerHTML = "0" + minutes;
@@ -28,6 +72,22 @@ socket.on('connect', function(){});
 socket.on('updateTime', function(data){
     currentSeconds = data.seconds;
     currentMinutes = data.minutes;
+
+    if (!isController) {
+        if (currentSeconds%2 == 1) {
+            let lowSoundSourceNode = context.createBufferSource();
+            lowSoundSourceNode.buffer = soundObject.lowSoundBuffer;
+            lowSoundSourceNode.connect(soundObject.dynamicsCompressorNode);
+
+            lowSoundSourceNode.start();
+        } else {
+            let highSoundSourceNode = context.createBufferSource();
+            highSoundSourceNode.buffer = soundObject.highSoundBuffer;
+            highSoundSourceNode.connect(soundObject.dynamicsCompressorNode);
+
+            highSoundSourceNode.start();
+        }
+    }
 
     displayTime(data.minutes, data.seconds);
 });
