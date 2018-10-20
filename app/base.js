@@ -62,8 +62,13 @@ let addTime = function(minutes, seconds) {
     let newMinutes = currentMinutes + minutes;
 
     if (newSeconds > 60) {
-        newMinutes += newSeconds%60;
-        newSeconds = newSeconds - 60*newSeconds%60;
+        newMinutes += Math.floor(newSeconds/60);
+        newSeconds = newSeconds - 60*Math.floor(newSeconds/60);
+    }
+
+    if (newSeconds < 0 && newMinutes > 0) {
+        newMinutes--;
+        newSeconds += 60;
     }
 
     socket.emit("settime", { minutes: newMinutes, seconds: newSeconds });
